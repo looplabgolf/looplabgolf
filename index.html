@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>looplab golf</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #000000;
+      --text: #F5F1E8;
+      --text-secondary: #8A8A82;
+      --accent: #5BF08C;
+      --border: rgba(255,255,255,0.14);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wordmark { font-size: 40px; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 14px; }
+    .wordmark span { font-weight: 500; color: var(--text-secondary); }
+    .tagline { font-size: 16px; font-weight: 500; color: var(--text-secondary); margin-bottom: 44px; letter-spacing: -0.01em; }
+    .button {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent); color: #06120D;
+      font-family: "Space Grotesk", sans-serif; font-size: 18px; font-weight: 600; letter-spacing: -0.01em;
+      text-decoration: none; padding: 18px 36px; border-radius: 18px;
+      transition: transform 0.15s ease; box-shadow: 0 0 40px rgba(91,240,140,0.25);
+      cursor: pointer; border: none;
+    }
+    .button:active { transform: scale(0.97); }
+    .hint { margin-top: 20px; font-size: 13px; font-weight: 500; color: var(--text-secondary); opacity: 0.7; }
+    .footer { position: fixed; bottom: 24px; font-size: 12px; font-weight: 500; color: var(--text-secondary); opacity: 0.6; }
+  </style>
+</head>
+<body>
+
+  <div class="wordmark">looplab <span>golf</span></div>
+  <div class="tagline">Handicap · stats · scorecards</div>
+
+  <a class="button" id="storeBtn"
+     href="https://apps.apple.com/de/app/looplab-golf/id6766962007">
+    Open in App Store →
+  </a>
+
+  <div class="hint">Tap to download</div>
+
+  <div class="footer">looplabgolf.com</div>
+
+  <script>
+    (function () {
+      var storeUrl = "https://apps.apple.com/de/app/looplab-golf/id6766962007";
+      // This page's own URL — Instagram will open THIS in the external browser,
+      // and this page then forwards to the App Store in Safari (where it works).
+      var selfUrl = window.location.href;
+
+      var ua = navigator.userAgent || "";
+      var isInstagram = /Instagram/i.test(ua);
+      var isFacebook  = /FBAN|FBAV/i.test(ua);
+
+      if (isInstagram) {
+        // Ask Instagram to reopen THIS page in the external browser (Safari).
+        // Once in Safari, the redirect below (or the button) reaches the App Store.
+        window.location.href = "instagram://extbrowser?url=" + encodeURIComponent(selfUrl);
+        // Give the scheme a moment; if we're now in Safari on next load,
+        // the code path below (non-Instagram) will forward to the store.
+        return;
+      }
+
+      if (isFacebook) {
+        // Facebook's equivalent.
+        window.location.href = "fb://facewebmodal/f?href=" + encodeURIComponent(selfUrl);
+        return;
+      }
+
+      // Normal browser (incl. Safari after the extbrowser jump):
+      // forward straight to the App Store.
+      window.location.href = storeUrl;
+    })();
+  </script>
+
+</body>
+</html>
